@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OffPay - Serverless UPI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Off<span>Pay</span></h1>
+    <label class="switch">
+      <input type="checkbox" id="onlineSwitch" checked>
+      <span id="netLabel">Online</span>
+    </label>
+  </header>
+
+  <main>
+    <!-- Create account / switch account -->
+    <section class="card">
+      <h2>Account</h2>
+      <div class="row">
+        <input id="newName" placeholder="Your name">
+        <button id="createBtn">Create account</button>
+      </div>
+      <div class="row" id="switchRow" hidden>
+        <select id="accountSelect"></select>
+      </div>
+    </section>
+
+    <div id="app" hidden>
+      <section class="card balances">
+        <div><small>UPI ID</small><b id="upiId"></b></div>
+        <div><small>Bank balance</small><b id="bankBal"></b></div>
+        <div><small>Offline wallet</small><b id="walletBal"></b></div>
+      </section>
+
+      <section class="card">
+        <h2>1. Add money to offline wallet <em>(needs internet)</em></h2>
+        <div class="row">
+          <input id="loadAmount" type="number" min="1" placeholder="Amount (max Rs.2000)">
+          <button id="loadBtn">Add</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>2. Pay <em>(works offline)</em></h2>
+        <input id="payTo" placeholder="Receiver UPI ID">
+        <input id="payAmount" type="number" min="1" placeholder="Amount">
+        <button id="payBtn">Create payment code</button>
+        <textarea id="tokenOut" readonly placeholder="Payment code appears here. Give it to the receiver."></textarea>
+      </section>
+
+      <section class="card">
+        <h2>3. Receive <em>(works offline)</em></h2>
+        <textarea id="tokenIn" placeholder="Paste the payment code here"></textarea>
+        <button id="receiveBtn">Verify &amp; accept</button>
+      </section>
+
+      <section class="card">
+        <h2>4. Sync with bank <em>(needs internet)</em></h2>
+        <p>Unsynced payments: <b id="queueCount">0</b></p>
+        <button id="syncBtn">Sync now</button>
+        <table>
+          <thead><tr><th>Type</th><th>Other party</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody id="history"></tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" hidden></div>
+  <script src="app.js"></script>
+</body>
+</html>
